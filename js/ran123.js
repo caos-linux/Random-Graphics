@@ -99,3 +99,54 @@ class Rand2 extends Rand {
     }
 }
 
+class Rand3 extends Rand {
+    random () {
+	let mj, mk;
+	let i, ii, k;
+	if (this.idum < 0 || this.iff === 0) {
+            this.iff = 1;
+            mj = this.MSEED - Math.abs(this.idum);
+            mj %= this.MBIG;
+            this.ma[55] = mj;
+            mk = 1;
+            for (i = 1; i <= 54; i++) {
+		ii = (21 * i) % 55;
+		this.ma[ii] = mk;
+		mk = mj - mk;
+		if (mk < this.MZ) mk += this.MBIG;
+		mj = this.ma[ii];
+            }
+            for (k = 1; k <= 4; k++) {
+		for (i = 1; i <= 55; i++) {
+                    this.ma[i] -= this.ma[1 + (i + 30) % 55];
+                    if (this.ma[i] < this.MZ) this.ma[i] += this.MBIG;
+		}
+            }
+            this.inext = 0;
+            this.inextp = 31;
+            this.idum = 1;
+	}
+	if (++this.inext === 56) this.inext = 1;
+	if (++this.inextp === 56) this.inextp = 1;
+	mj = this.ma[this.inext] - this.ma[this.inextp];
+	if (mj < this.MZ) mj += this.MBIG;
+	this.ma[this.inext] = mj;
+	return mj * this.FAC;
+    }
+}
+
+
+
+
+class RandLC {
+    constructor(seed,a,c,m) {
+	this.seed=seed;
+	this.a=a;
+	this.c=c;
+	this.m=m;
+    }
+    random () {
+	this.seed = (this.a * this.seed + this.c) % this.m;
+	return this.seed / this.m
+    }
+}
