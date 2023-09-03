@@ -1,6 +1,5 @@
 class Rand {
-    constructor(num,seed) {
-        this.num = num;
+    constructor(seed) {
         this.idum = seed;
         this.NTAB = 32;
         this.EPS = Number.MIN_VALUE;
@@ -35,8 +34,11 @@ class Rand {
         this.iff = 0;
     }
     
+}
 
-     rand1() {
+class Rand1 extends Rand {
+
+    random () {
         let j;
         let k;
         let temp;
@@ -64,3 +66,36 @@ class Rand {
 
 
 }
+
+class Rand2 extends Rand {
+    random () {
+	let j;
+	let k;
+	let temp;
+	if (this.idum <= 0) {
+            if (-(this.idum) < 1) this.idum = 1;
+            else this.idum = -this.idum;
+            this.idum2 = this.idum;
+            for (j = this.NTAB + 7; j >= 0; j--) {
+		k = Math.floor(this.idum / this.IQ2_1);
+		this.idum = this.IA2_1 * (this.idum - k * this.IQ2_1) - this.IR2_1 * k;
+		if (this.idum < 0) this.idum += this.IM2_1;
+		if (j < this.NTAB) this.iv[j] = this.idum;
+            }
+            this.iy = this.iv[0];
+	}
+	k = Math.floor(this.idum / this.IQ2_1);
+	this.idum = this.IA2_1 * (this.idum - k * this.IQ2_1) - this.IR2_1 * k;
+	if (this.idum < 0) this.idum += this.IM2_1;
+	k = Math.floor(this.idum2 / this.IQ2_2);
+	this.idum2 = this.IA2_2 * (this.idum2 - k * this.IQ2_2) - k * this.IR2_2;
+	if (this.idum2 < 0) this.idum2 += this.IM2_2;
+	j = Math.floor(this.iy / this.NDIV2);
+	this.iy = this.iv[j] - this.idum2;
+	this.iv[j] = this.idum;
+	if (this.iy < 1) this.iy += this.IMM2;
+	if ((temp = this.AM2 * this.iy) > this.RNMX) return (this.RNMX);
+	else return (temp);
+    }
+}
+
