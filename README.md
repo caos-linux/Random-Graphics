@@ -1,6 +1,10 @@
 # random-graphics
 The app generates random numbers in the interval [0,1[; the resulting numbers are taken in pairs and plotted in a x,y graph.
 
+Mersenne Twister generator is based on  banksean javascript Mersenne Twister implementation https://gist.github.com/banksean/300494 .
+
+Demo https://matteo.mortaro.it/post/2023-09-05_random_graphics/
+
 To obtain instances of random numbers one can choose one of the standard routines ran1, ran2 or ran3 
 (Numerical Recipes in C - second edition), the Mersenne Twister generator, or one can define from input 
 the coefficients of a linear congruential generator. Recall that the meaning of the coefficients is as follows:
@@ -22,6 +26,8 @@ a=3;
 c=5;
 m=1024;
 
+![ex1](examples/es1.png "Es 1")
+
 The first example highlights the correlation problem that can occur in linear congruential random number generators. Obviously, this is an extreme case.
 
 ## Example 2
@@ -30,5 +36,7 @@ seed=1;
 a=16807;
 c=0;
 m=2147483647;
+
+![ex2](examples/es2.png "Es 1")
 
 This example was proposed by Park and Miller as a minimum quality standard for a random number generator.
